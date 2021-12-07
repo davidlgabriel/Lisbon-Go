@@ -1,11 +1,16 @@
 import React, {Component} from 'react';
-import {StyleSheet, TextInput, View,Button } from 'react-native';
+import { Dimensions, KeyboardAvoidingView, useState, StyleSheet, Text, TextInput, TouchableOpacity, View,Button, Image, TouchableWithoutFeedback , Keyboard, ImageBackground, Linking} from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import * as LocalAuthentication from 'expo-local-authentication';
+
 
 export default class LoginScreen extends React.Component{
     constructor(props){
         super(props);
         this.state={id:'', first_name:'', last_name:'', email:'', password:'', phone:'', birthday:'', photo: "", qr: ""}
     }
+
+    
 
     InsertData=()=>{
         var email=this.state.email;
@@ -64,7 +69,7 @@ export default class LoginScreen extends React.Component{
                 }
 
                 else {
-                    alert("Mete bem a pass rapaz!");
+                    alert("Incorrect Username or Password.");
                 }
                 
             })
@@ -73,26 +78,49 @@ export default class LoginScreen extends React.Component{
             })
         }
     }
+    
+
     render(){
         return(
-             <View style={styles.inputContainer}>
-                    <TextInput 
-                        placeholder={"Email" }
-                        onChangeText={email=>this.setState({email})}
-                        style={styles.input}
-                    ></TextInput>
-                    <TextInput 
-                        placeholder="Password"  
-                        onChangeText={password => this.setState({password}) }
-                        style={styles.input}
-                        secureTextEntry
-                    ></TextInput>
-                    <Button
-                        title={"Registar"}
-                        onPress={this.InsertData} 
-                    />
-                </View>
+            <ImageBackground style={{width: Dimensions.get('window').width, height: Dimensions.get('window').height + 50, position: 'absolute',}}
+                    source={require('./fundo2.jpg')}>
+                        
+                <View style={styles.container}>
+                    <View style={styles.content}>
+                        <Text style={styles.bigText}>Há comboios que só passam uma vez...</Text>
+                        <Text style={styles.smallText}>Não percas o teu!</Text>
+                    </View>
                     
+                    
+                        <View style={styles.inputContainer}>
+                            <KeyboardAwareScrollView  enableOnAndroid={true}>
+                            <Text style={styles.textAboveInput}>Insere o teu Email</Text>
+                            <TextInput  
+                                onChangeText={email => this.setState({email})}
+                                style={styles.input}
+                            ></TextInput>
+                            <Text style={styles.textAboveInput}>Insere a tua Password</Text>
+                            <TextInput 
+                                value={this.state.password}
+                                onChangeText={password => this.setState({password})}
+                                style={styles.input}
+                                secureTextEntry
+                                ></TextInput>
+                            <TouchableOpacity onPress={this.InsertData} >
+                                <View style={styles.login}>
+                                    <Text style={styles.headerText}>Login</Text>
+                                </View>
+                            </TouchableOpacity>
+                                <Text style={styles.register} onPress={() => {this.props.navigation.navigate('RegistrationScreen')}}>
+                                    Ainda não tens conta? Regista-te!
+                                </Text>
+                                </KeyboardAwareScrollView>
+                    </View>
+                    
+                    
+                </View> 
+                
+            </ImageBackground> 
     
         )
 
@@ -101,65 +129,81 @@ export default class LoginScreen extends React.Component{
 
 
 const styles= StyleSheet.create({
-    container:{
+    container: {
         flex: 1,
-        justifyContent: 'center',
+        backgroundColor: 'transparent',
+        flexDirection: 'column', 
+        alignItems: 'center',
+        justifyContent: 'flex-end',
+    },
+    content: {
+        paddingBottom: 90,
+        backgroundColor: 'transparent',
+        flexDirection: 'column', 
         alignItems: 'center',
     },
+    bigText: {
+        color: '#fff',
+        fontSize: 32,
+        textAlign: 'center',
+     },
+    smallText: {
+        textAlign: 'center',
+        color: '#fff',
+        fontSize: 20,
+    },
+    register: {
+        zIndex: 1,
+        textAlign: 'center',
+        color: '#000',
+        fontSize: 12,
+    },
     inputContainer: {
-        width:'88%'
+        backgroundColor: '#fff',
+        flexDirection: 'column',
+        width:'100%',
+        borderRadius: 15,
+        paddingBottom: 50,
     },
     input:{
-
-        backgroundColor:'white',
+        backgroundColor: '#F5F5F5',
+        alignItems: 'center',
+        justifyContent: 'center',
+        width:'88%',
+        marginLeft: 22,
         paddingHorizontal: 15,
         paddingVertical: 10,
         borderRadius: 10,
-        marginTop: 70, 
+        marginTop: 5, 
     },
-    buttonContainer:{
-        width:'60%',
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginTop: 40,
+    textAboveInput: {
+        marginLeft: 22,
+        paddingTop: 15,
     },
-    button:{
-        backgroundColor: '#0782F9',
-        width: '100%',
-        padding:15,
-        borderRadius: 10,
-        alignItems:'center',
+    headerText: {
+        textAlign: 'center',
+        fontSize: 15,
+        fontWeight: 'bold',
+        color: '#fff',
+        
     },
-    buttonText:{
-        color:'white',
-        fontWeight: '700',
-        fontSize: 16,
+    buttons: {
+        backgroundColor: '#B98831',
+        color: '#000',
+        width: 300,
+        height: 50,
+        alignSelf: 'center',
+        padding: 15,
+        marginTop: 15,
+        borderRadius: 15,
     },
-    buttonOutline:{
-        backgroundColor:'white',
-        marginTop:5,
-        borderColor: '#0782F9',
-        borderWidth:2,
-
+    login: {
+        backgroundColor: '#B98831',
+        width: 300,
+        height: 50,
+        alignSelf: 'center',
+        padding: 15,
+        marginTop: 15,
+        borderRadius: 15,
     },
-    buttonOutlineText:{
-        color: '#0782F9',
-        fontWeight:'700',
-        fontSize:16,
-    },
-    background: {
-        flex: 1,
-        justifyContent: "flex-end"
-      },
-    loginButton: {
-        width: '100%',
-        height: 70,
-        backgroundColor: '#fff'
-      },
-    
-      registerButton: {
-        width: '100%',
-        height: 70,
-        backgroundColor: '#4ecdc4'
-      } 
 })

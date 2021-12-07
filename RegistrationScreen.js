@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import React, {Component} from 'react';
-import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View,Button, Image } from 'react-native';
-
+import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View,Button, Image, TouchableWithoutFeedback , Keyboard} from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { LinearGradient } from 'expo-linear-gradient';
 
 export default class RegistrationScreen extends React.Component{
@@ -76,58 +76,59 @@ export default class RegistrationScreen extends React.Component{
     }
     render(){
         return(
-            <View style={styles.container}>
-                <View>
-                    
-                <LinearGradient colors={['#B98831', '#F1CA87']} style={styles.back}>
-                <Image
-                    style={styles.image}
-                    source={require('./lisbongo.png')}
-                    />
-                </LinearGradient>
-                
-                
-                </View>
-                <View style={styles.inputContainer}>
-                    <Text style={styles.textAboveInput}>Insere o teu Primeiro nome</Text>
-                    <TextInput 
-                        onChangeText={first_name => this.setState({first_name}) }
-                        style={styles.input}
-                    ></TextInput>
-                    <Text style={styles.textAboveInput}>Insere o teu Último nome</Text>
-                    <TextInput 
-                        onChangeText={last_name => this.setState({last_name}) }
-                        style={styles.input}
-                    ></TextInput>
-                    <Text style={styles.textAboveInput}>Insere o teu Emai</Text>
-                    <TextInput 
-                        onChangeText={email=>this.setState({email})}
-                        style={styles.input}
-                    ></TextInput>
-                    <Text style={styles.textAboveInput}>Insere a tua Password</Text>
-                    <TextInput 
-                        onChangeText={password => this.setState({password}) }
-                        style={styles.input}
-                        secureTextEntry
-                    ></TextInput>
-                    <Text style={styles.textAboveInput}>Insere o teu Número de Telemóvel</Text>
-                    <TextInput  
-                        onChangeText={phone => this.setState({phone}) }
-                        style={styles.input}
-                    ></TextInput>
-                    <Text style={styles.textAboveInput}>Insere a tua Data de Nascimento</Text>
-                    <TextInput 
-                        onChangeText={birthday => this.setState({birthday}) }
-                        style={styles.input}
-                    ></TextInput>
-                    <TouchableOpacity onPress={this.InsertData} >
-                        <View style={styles.buttons}>
-                            <Text style={styles.headerText}>Registar</Text>
+            <KeyboardAwareScrollView>
+                    <View style={styles.container}>
+                        <View>
+                            
+                        <LinearGradient colors={['#B98831', '#F1CA87']} style={styles.back}>
+                        <Image
+                            style={styles.image}
+                            source={require('./lisbongo.png')}
+                            />
+                        </LinearGradient>
+                        
+                        
                         </View>
-                    </TouchableOpacity>
-                </View>
-            </View>
-                    
+                        <View style={styles.inputContainer}>
+                            <Text style={styles.textAboveInput}>Insere o teu Primeiro nome</Text>
+                            <TextInput 
+                                onChangeText={first_name => this.setState({first_name}) }
+                                style={styles.input}
+                            ></TextInput>
+                            <Text style={styles.textAboveInput}>Insere o teu Último nome</Text>
+                            <TextInput 
+                                onChangeText={last_name => this.setState({last_name}) }
+                                style={styles.input}
+                            ></TextInput>
+                            <Text style={styles.textAboveInput}>Insere o teu Emai</Text>
+                            <TextInput 
+                                onChangeText={email=>this.setState({email})}
+                                style={styles.input}
+                            ></TextInput>
+                            <Text style={styles.textAboveInput}>Insere a tua Password</Text>
+                            <TextInput 
+                                onChangeText={password => this.setState({password}) }
+                                style={styles.input}
+                                secureTextEntry
+                            ></TextInput>
+                            <Text style={styles.textAboveInput}>Insere o teu Número de Telemóvel</Text>
+                            <TextInput  
+                                onChangeText={phone => this.setState({phone}) }
+                                style={styles.input}
+                            ></TextInput>
+                            <Text style={styles.textAboveInput}>Insere a tua Data de Nascimento</Text>
+                            <TextInput 
+                                onChangeText={birthday => this.setState({birthday}) }
+                                style={styles.input}
+                            ></TextInput>
+                            <TouchableOpacity onPress={this.InsertData} >
+                                <View style={styles.buttons}>
+                                    <Text style={styles.headerText}>Registar</Text>
+                                </View>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </KeyboardAwareScrollView>
                     
     
         )

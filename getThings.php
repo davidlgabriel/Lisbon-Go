@@ -1,7 +1,6 @@
 <?php
 
     $CN = mysqli_connect("lisbongo.crrr4pirsxzp.us-east-2.rds.amazonaws.com", "admin", "LisbonGo123");
-
     $DB = mysqli_select_db($CN, "LisbonGo");
 
     $Encoded = file_get_contents('php://input');

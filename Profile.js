@@ -10,9 +10,11 @@ import {
   TouchableOpacity,
   Platform,
   SafeAreaView,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import * as ImagePicker from 'expo-image-picker';
 
 class ExpandableItemComponent extends Component {
     //Custom Component for the Expandable List
@@ -101,18 +103,7 @@ class Profile extends React.Component {
         }
         this.state={listDataSource: CONTENT, id:'', first_name:'', last_name:'', email:'', phone:'', birthday:'', photo: "", qr: ""}
     }
-
-    getData=(things)=>{
-        this.setState({first_name:things['id']});
-        this.setState({last_name:things['first_name']});
-        this.setState({email:things['last_name']});
-        this.setState({phone:things['email']});
-        this.setState({birthdayqr:things['phone']});
-        this.setState({photo:things['birthday']});
-        this.setState({id:things['photo']});
-        this.setState({qr:things['qr']});
-    }
-
+    
     updateLayout = index => {
         LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
         const array = [...this.state.listDataSource];
@@ -129,6 +120,72 @@ class Profile extends React.Component {
         });
     };
 
+
+ 
+    openImagePickerAsync = async (things) => {
+        let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    
+        if (permissionResult.granted === false) {
+            alert("Permission to access camera roll is required!");
+            return;
+        }
+    
+        let pickerResult = await ImagePicker.launchImageLibraryAsync();
+        console.log(pickerResult);
+
+        if(pickerResult.uri) {
+            var email= things['email'];
+            var photo =pickerResult.uri;
+            console.log(email, photo)
+            if (email.length == 0) {
+                alert("What is happening my friend");
+            }else{
+                var InsertAPIURL = "http://192.168.1.86/photo.php";
+
+                var header = {
+                    'Accept':'application/json',
+                    'Content-Type':'application/json'
+                };
+
+                var Data={
+                    email:email,
+                    photo:photo,
+
+                };
+                
+
+                fetch(
+                InsertAPIURL,
+                {
+                    method:'POST',
+                    headers:header,
+                    body: JSON.stringify(Data)
+                }  
+                )
+                .then((response)=>response.json())
+                .then((response)=>{
+                    console.log(response[0].Message);
+            })
+            .catch((error)=>{
+                alert("Error" + error)
+            })
+        }
+
+            this.props.navigation.navigate('Profile', {
+                id: things['id'],
+                first_name: things['first_name'],
+                last_name: things['last_name'],
+                email: things['email'],
+                birthday: things['birthday'],
+                phone: things['phone'],
+                qr: things['qr'],
+                photo: pickerResult.uri,
+            })
+        }
+
+        
+    }
+
     render() {
         var things = this.props.route.params;
         return (
@@ -138,10 +195,10 @@ class Profile extends React.Component {
                 <View style={{ borderBottomColor: '#CB9535', borderBottomWidth: 2.5, width: '50%', }}/>
             </View>
             <View style={styles.firstColumn}>
-                <Image
-                    style={styles.stretch}
-                    source={{uri: this.state.photo ,}}
-                />
+                <TouchableWithoutFeedback onPress={() => {this.openImagePickerAsync(things)}}>
+                <Image style={styles.stretch} source={{uri: things['photo'] ,}} />
+                </TouchableWithoutFeedback>
+                    
                 <View>
                     <Text style={styles.name}>{things["first_name"]}</Text>
                     <Text style={styles.name}>{things["last_name"]}</Text>
