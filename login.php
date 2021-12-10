@@ -26,6 +26,7 @@ $birthday="";
 $qr ="";
 $phone ="";
 $message="500";
+$passe="";
 
 $Table = mysqli_query($CN, $IQ);
 if ($Table) {
@@ -39,13 +40,14 @@ if ($Table) {
         $birthday = $Row['birthday'];
         $qr = $Row['qr'];
         $phone = $Row['phone'];
+        $passe = $Row['passe'];
         $message="200";
         }
     }
 else {
     $message="Server Error";
 }
-$Response[]= array("Message"=> $message, "id" => $id, "first_name" => $first_name, "last_name" => $last_name, "photo"=> $photo, "birthday"=>$birthday, "qr" => $qr, "phone" => $phone, "email" => $email);
+$Response[]= array("Message"=> $message, "id" => $id, "first_name" => $first_name, "last_name" => $last_name, "photo"=> $photo, "birthday"=>$birthday, "qr" => $qr, "phone" => $phone, "email" => $email, "passe" => $passe);
 echo json_encode($Response);
 
 ?>

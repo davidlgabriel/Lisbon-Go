@@ -23,8 +23,12 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF",
-        "permissions": ["READ_EXTERNAL_STORAGE", "CAMERA"]
-      }
+        "permissions": [
+          "READ_EXTERNAL_STORAGE",
+          "CAMERA"
+        ]
+      },
+      "package": "com.davidlgabriel.LisbONGo"
     },
     "web": {
       "favicon": "./assets/favicon.png"

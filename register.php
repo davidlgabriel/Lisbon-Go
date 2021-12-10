@@ -18,7 +18,7 @@ $birthday = $DecodedData['birthday'];
 
 
 $password_encrypt= md5($password);
-$IQ = "insert into Users(first_name,last_name, email, pass, birthday, phone, qr) values('$first_name','$last_name','$email', '$password_encrypt', '$birthday', '$phone', 'https://i.ibb.co/2NGSpMk/qrcode-5863786.png')";
+$IQ = "insert into Users(first_name,last_name, email, pass, birthday, phone) values('$first_name','$last_name','$email', '$password_encrypt', '$birthday', '$phone')";
 
 $R = mysqli_query($CN,$IQ);
 
@@ -36,6 +36,7 @@ if ($R) {
         $qr = $Row["qr"];
         $birthday = $Row["birthday"];
         $phone = $Row["phone"];
+        $passe = $Row["passe"];
         
     }else{
        $id = ""; 
@@ -45,13 +46,14 @@ if ($R) {
        $qr = ""; 
        $birthday = ""; 
        $phone = ""; 
+       $passe = "";
     }
 }else {
     $message = "Server error... Please try latter";
 }
 
 
-$Response[] = array("Message"=> $message, "id" => $id, "first_name"=>$first_name, "last_name"=>$last_name, "email"=>$email, "photo"=>$photo, "qr"=>$qr, "birthday" => $birthday, "phone" => $phone);
+$Response[] = array("Message"=> $message, "id" => $id, "first_name"=>$first_name, "last_name"=>$last_name, "email"=>$email, "photo"=>$photo, "qr"=>$qr, "birthday" => $birthday, "phone" => $phone,"passe" => $passe);
 echo json_encode($Response);
 
 ?>

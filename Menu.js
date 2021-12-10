@@ -18,7 +18,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 class Menu extends React.Component {
     constructor() {
       super();
-      this.state={id:'', first_name:'', last_name:'', email:'', phone:'', birthday:'', photo: "", qr: ""}
+      this.state={id:'', first_name:'', last_name:'', email:'', phone:'', birthday:'', photo: "", qr: "", passe: ""}
     }
 
 
@@ -31,6 +31,7 @@ class Menu extends React.Component {
         this.setState({photo:things['birthday']});
         this.setState({id:things['photo']});
         this.setState({qr:things['qr']});
+        this.setState({qr:things['passe']});
     }
     
   
@@ -50,7 +51,8 @@ class Menu extends React.Component {
                     birthday: things['birthday'],
                     phone: things['phone'],
                     qr: things['qr'],
-                    photo: things['photo']
+                    photo: things['photo'],
+                    passe:things['passe']
                 })
             }}>
                 <View style={styles.buttons}>
@@ -66,7 +68,8 @@ class Menu extends React.Component {
                     birthday: things['birthday'],
                     phone: things['phone'],
                     qr: things['qr'],
-                    photo: things['photo']
+                    photo: things['photo'],
+                    passe: things['passe']
                 })}}>
                 <View style={styles.buttons}>
                     <Text style={styles.headerText}>Meu Cartão</Text>

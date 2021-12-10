@@ -18,6 +18,7 @@ import { navigationRef } from './RootNavigation';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 import Profile from "./Profile.js"
+import AddCard from "./AddCard.js"
 import QR from "./QR.js"
 import Menu from "./Menu.js"
 import Select from "./Select.js"
@@ -67,6 +68,7 @@ class App extends React.Component {
           ),}}>
         <Stack.Screen name="RegistrationScreen" component={RegistrationScreen} options={{headerShown: false}} />
         <Stack.Screen name="Profile" component={Profile} options={{title: ''}} />
+        <Stack.Screen name="AddCard" component={AddCard} options={{title: ''}} />
         <Stack.Screen name="Menu" component={Menu} options={{headerShown: false}} />
         <Stack.Screen name="QR" component={QR} options={{title: ''}} />
         <Stack.Screen name="Select" component={Select} options={{title: ''}} />

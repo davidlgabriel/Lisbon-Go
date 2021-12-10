@@ -46,6 +46,8 @@ class ExpandableItemComponent extends Component {
         return false;
     }
 
+    
+
     render() {
         return (
         <View>
@@ -56,7 +58,21 @@ class ExpandableItemComponent extends Component {
             style={styles.header}>
             <View style={styles.createSpace}>
                 <Text style={styles.headerText}>{this.props.item.category_name}</Text>
+                <TouchableOpacity
+            activeOpacity={0.8}
+            onPress={() => this.props.navigation.navigate('AddCard', { 
+                id: this.props.things['id'],
+                first_name: this.props.things['first_name'],
+                last_name: this.props.things['last_name'],
+                email: this.props.things['email'],
+                birthday: this.props.things['birthday'],
+                phone: this.props.things['phone'],
+                qr: this.props.things['qr'],
+                photo: this.props.things['photo'],
+                passe: this.props.things['passe']
+            })}>
                 <Text style={styles.plusSign}>+</Text>
+                </TouchableOpacity>
             </View>
             </TouchableOpacity>
             <View
@@ -77,7 +93,8 @@ class ExpandableItemComponent extends Component {
                     birthday: this.props.things['birthday'],
                     phone: this.props.things['phone'],
                     qr: this.props.things['qr'],
-                    photo: this.props.things['photo']
+                    photo: this.props.things['photo'],
+                    passe: this.props.things['passe']
                 })}>
                 <Text style={styles.text}>
                     {item.val}
@@ -101,9 +118,26 @@ class Profile extends React.Component {
         if (Platform.OS === 'android') {
         UIManager.setLayoutAnimationEnabledExperimental(true);
         }
-        this.state={listDataSource: CONTENT, id:'', first_name:'', last_name:'', email:'', phone:'', birthday:'', photo: "", qr: ""}
+        this.state={listDataSource: this.CONTENT, id:'', first_name:'', last_name:'', email:'', phone:'', birthday:'', photo: "", qr: "",passe: ""}
     }
-    
+    CONTENT = [
+        {
+          isExpanded: false,
+          category_name: 'Pass Sub 23',
+          subcategory: [{ id: 1, val: '1', img: null }],
+          
+        },
+        {
+          isExpanded: false,
+          category_name: 'Bilhetes Válidos',
+          subcategory: [{ id: 4, val: '1' }, { id: 5, val: '' }],
+        },
+        {
+          isExpanded: false,
+          category_name: 'As minhas viagens',
+          subcategory: [{ id: 7, val: '' }, { id: 9, val: '2' }],
+        },
+    ];
     updateLayout = index => {
         LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
         const array = [...this.state.listDataSource];
@@ -180,6 +214,7 @@ class Profile extends React.Component {
                 phone: things['phone'],
                 qr: things['qr'],
                 photo: pickerResult.uri,
+                passe: things['passe']
             })
         }
 
@@ -188,6 +223,11 @@ class Profile extends React.Component {
 
     render() {
         var things = this.props.route.params;
+        console.log("passe="+things["passe"]);
+        console.log("content="+this.CONTENT[0].subcategory[0].val);
+        if (things["passe"] == 1) {
+            this.CONTENT[0].subcategory[0].img=things['passe'];
+        }
         return (
         <SafeAreaView style={styles.container}>
             <View style={styles.myProfileView}>
@@ -227,24 +267,7 @@ class Profile extends React.Component {
 
 export default Profile;
 
-const CONTENT = [
-    {
-      isExpanded: false,
-      category_name: 'Pass Sub 23',
-      subcategory: [{ id: 1, val: '1', img: './profile.jpg' }, ],
-      
-    },
-    {
-      isExpanded: false,
-      category_name: 'Bilhetes Válidos',
-      subcategory: [{ id: 4, val: '1' }, { id: 5, val: '' }],
-    },
-    {
-      isExpanded: false,
-      category_name: 'As minhas viagens',
-      subcategory: [{ id: 7, val: '' }, { id: 9, val: '2' }],
-    },
-];
+
 
   
 const styles = StyleSheet.create({

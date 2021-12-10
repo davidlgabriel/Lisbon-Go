@@ -7,7 +7,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 export default class RegistrationScreen extends React.Component{
     constructor(props){
         super(props);
-        this.state={id:'', first_name:'', last_name:'', email:'', password:'', phone:'', birthday:'', photo: "", qr: ""}
+        this.state={id:'', first_name:'', last_name:'', email:'', password:'', phone:'', birthday:'', photo: "", qr: "",passe:""}
     }
 
     InsertData = () => {
@@ -18,10 +18,11 @@ export default class RegistrationScreen extends React.Component{
         var password=this.state.password;
         var birthday=this.state.birthday;
         var phone=this.state.phone;
+        var passe= this.state.passe;
         if (email.length == 0) {
             alert("What is happening my friend");
         }else{
-            var InsertAPIURL = "http://192.168.1.86/register.php";
+            var InsertAPIURL = "http://192.168.1.36/register.php";
 
             var header = {
                 'Accept':'application/json',
@@ -35,7 +36,8 @@ export default class RegistrationScreen extends React.Component{
                 email:email,
                 password:password,
                 birthday:birthday,
-                phone:phone
+                phone:phone,
+                passe:passe
 
             };
             
@@ -58,6 +60,7 @@ export default class RegistrationScreen extends React.Component{
                 this.setState({phone:response[0].phone});
                 this.setState({photo:response[0].photo});
                 this.setState({qr:response[0].qr});
+                this.setState({passe:response[0].passe});
                 this.props.navigation.navigate('Menu', { 
                     id: this.state.id,
                     first_name: this.state.first_name,
@@ -66,7 +69,8 @@ export default class RegistrationScreen extends React.Component{
                     birthday: this.state.birthday,
                     phone: this.state.phone,
                     qr: this.state.qr,
-                    photo: this.state.photo
+                    photo: this.state.photo,
+                    passe:this.state.passe
                 } );
             })
             .catch((error)=>{

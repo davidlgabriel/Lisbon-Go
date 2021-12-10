@@ -7,7 +7,7 @@ import * as LocalAuthentication from 'expo-local-authentication';
 export default class LoginScreen extends React.Component{
     constructor(props){
         super(props);
-        this.state={id:'', first_name:'', last_name:'', email:'', password:'', phone:'', birthday:'', photo: "", qr: ""}
+        this.state={id:'', first_name:'', last_name:'', email:'', password:'', phone:'', birthday:'', photo: "", qr: "", passe: ""}
     }
 
     
@@ -21,7 +21,7 @@ export default class LoginScreen extends React.Component{
             alert("wow");
         }else{
 
-            var InsertAPIURL = "http://192.168.1.86/login.php";
+            var InsertAPIURL = "http://192.168.1.36/login.php";
 
             var header = {
                 'Accept':'application/json',
@@ -56,6 +56,7 @@ export default class LoginScreen extends React.Component{
                     this.setState({phone:response[0].phone});
                     this.setState({photo:response[0].photo});
                     this.setState({qr:response[0].qr});
+                    this.setState({passe:response[0].passe});
                     this.props.navigation.navigate('Menu', { 
                         id: this.state.id,
                         first_name: this.state.first_name,
@@ -64,7 +65,8 @@ export default class LoginScreen extends React.Component{
                         birthday: this.state.birthday,
                         phone: this.state.phone,
                         qr: this.state.qr,
-                        photo: this.state.photo
+                        photo: this.state.photo,
+                        passe: this.state.passe
                     } );
                     
                 }
@@ -84,13 +86,15 @@ export default class LoginScreen extends React.Component{
     render(){
         return(
             <ImageBackground style={{width: Dimensions.get('window').width, height: Dimensions.get('window').height + 50, position: 'absolute',}}
-                    source={require('./fundo2.jpg')}>
+                    source={require('./1.jpeg')}>
                         
                 <View style={styles.container}>
                     <View style={styles.content}>
+                        <Image style= {styles.image} source={require('./lisbongo.png')}/>
                         <Text style={styles.bigText}>Há comboios que só passam uma vez...</Text>
                         <Text style={styles.smallText}>Não percas o teu!</Text>
                     </View>
+                    
                     
                     
                         <View style={styles.inputContainer}>
@@ -198,6 +202,9 @@ const styles= StyleSheet.create({
         marginTop: 15,
         borderRadius: 15,
     },
+    image: {
+        resizeMode: 'stretch',
+     },
     login: {
         backgroundColor: '#B98831',
         width: 300,

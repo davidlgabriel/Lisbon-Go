@@ -17,7 +17,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 class Select extends React.Component {
     constructor() {
       super();
-      this.state={id:'', first_name:'', last_name:'', email:'', phone:'', birthday:'', photo: "", qr: ""}
+      this.state={id:'', first_name:'', last_name:'', email:'', phone:'', birthday:'', photo: "", qr: "",passe:""}
     }
     
     getData=(things)=>{
